@@ -40,6 +40,24 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             return parent::uninstall();
         }
 
+        //this function is backend
+        public function getContent(){
+            $this->context->smarty->assign($this->name, array(
+                'path' => $this->_path
+            ));
+
+            return $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+        }
+
+        public function hookDisplayHome(){
+            $this->context->smarty->assign($this->name, array(
+                'path' => $this->_path
+            ));
+
+            return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
+        }
+
+
         public function renderWidget($hookName, array $configuration){
 
         }
