@@ -5,11 +5,18 @@ if(!defined('_PS_VERSION_')){
 }
 
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
+   
+
+
 
 class psnewslettersulayr extends Module implements WidgetInterface{
 
+        //create arry for controls and for button
+        public $controls = array();
+        public $button = array();
+
         public function __construct(){
-            $this->name = psnewslettersulayr;
+            $this->name = 'psnewslettersulayr';
             $this->tab = 'sularyy';
             $this->version = '1.0.0';
             $this->author = 'sularyy';
@@ -22,7 +29,76 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             $this->displayName = $this->trans('',array('module for newslatter'), 'newslettersularyy');
             $this->description = $this->trans('Module for inscription newsletter');
             $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
+            $this->createControls();   
         }
+
+        protected function createControls(){
+            $this->controls['PSNEWSLETTERSULAIR_NAME'] = array(
+                'controlName' => 'PSNEWSLETTERSULAIR_NAME',
+                'values' => null,
+                'label' => $this->l('Name'),
+                'desc' => $this->l('Enter your name')
+ 
+            );
+            $this->controls['PSNEWSLETTERSULAIR_EMAIL'] = array(
+                'controlName' => 'PSNEWSLETTERSULAIR_EMAIL',
+                'values' => null,
+                'label' => $this->l('Email'),
+                'desc' => $this->l('Enter your email')
+ 
+            );
+            $this->controls['PSNEWSLETTERSULAIR_CONDITIONS'] = array(
+                'controlName' => 'PSNEWSLETTERSULAIR_CONDITIONS',
+                'values' => null,
+                'label' => $this->l('Acepto la política de privacidad de datos'),
+                'desc' => $this->l('Enter for politics the privacity')
+            );
+
+            $this->button['PSNEWSLETTERSULAIR_SUBMIT'] = array(
+                'controlName' => 'PSNEWSLETTERSULAIR_SUBMIT',
+                'label' => 'enviar'
+            );
+        }
+
+        protected function getCustomValues(array $controler){
+          $values=array();
+            foreach($controler as $clave){
+               //$values = $control['label'];
+               $values[$clave['controlName']]['controlName']=$clave['controlName'];
+               $values[$clave['controlName']]['label']=$clave['label'];
+               $values[$clave['controlName']]['desc']=$clave['desc'];
+              /* print $vaule['controlName'];
+               print '<br>';
+               print $clave['label'];
+               print '<br>';
+               print $clave['desc'];
+               print '<br>';*/
+            }
+         /*  print $values['PSNEWSLETTERSULAIR_NAME']['controlName'];
+            print '<br>';
+            print $values['PSNEWSLETTERSULAIR_EMAIL']['controlName'];
+            print '<br>';
+            print $values['PSNEWSLETTERSULAIR_NAME']['label'];
+            print '<br>';
+            print $values['PSNEWSLETTERSULAIR_EMAIL']['label'];
+            print '<br>';
+            print $values['PSNEWSLETTERSULAIR_NAME']['desc'];
+            print '<br>';
+            print $values['PSNEWSLETTERSULAIR_EMAIL']['desc'];*/
+            return $values;
+        }
+
+
+        public function getButtonForm($button){
+            $values = array();
+            foreach($button as $clave){
+                $values[$clave['controlName']]['controlName']=$clave['controlName'];
+                $values[$clave['controlName']]['label']=$clave['label'];
+            }
+          //  print $values['PSNEWSLETTERSULAIR_SUBMIT']['controlName'];
+            return $values;
+        }
+
 
         public function install(){
             Configuration::updateValue('PSNEWSLETTERSULARY_LIVE_MODE', false);
@@ -43,18 +119,27 @@ class psnewslettersulayr extends Module implements WidgetInterface{
         //this function is backend
         public function getContent(){
             $this->context->smarty->assign($this->name, array(
-                'path' => $this->_path
+                'path' => $this->_path,
+                'customControls' => $this->controls
             ));
 
-            return $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+            //return $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');   
         }
 
+        
+
         public function hookDisplayHome(){
+           
+            $resultInput=$this->getCustomValues($this->controls);
+            $resultButton=$this->getButtonForm($this->button);
             $this->context->smarty->assign($this->name, array(
-                'path' => $this->_path
+                'path' => $this->_path,
+                'customControls' => $resultInput,
+                'button' => $resultButton
             ));
 
             return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
+            //return $this->display(__FILE__, 'views/templates/hook/displayHome.tpl');
         }
 
 
@@ -65,4 +150,5 @@ class psnewslettersulayr extends Module implements WidgetInterface{
         public function getWidgetVariables($hookName, array $configuration){
 
         }
+       
 }
