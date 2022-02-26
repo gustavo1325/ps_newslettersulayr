@@ -32,6 +32,10 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             $this->createControls();   
         }
 
+        private function getDependencies(){
+            require_once 'class/GetFormData.php';
+        }
+
         protected function createControls(){
             $this->controls['PSNEWSLETTERSULAIR_NAME'] = array(
                 'controlName' => 'PSNEWSLETTERSULAIR_NAME',
@@ -59,6 +63,13 @@ class psnewslettersulayr extends Module implements WidgetInterface{
                 'label' => 'enviar'
             );
         }
+/*
+        public function hookvalidateCustomerFormFields($params){
+                print "hola dado";        
+                //header('Location: http://www.google.com/');
+                //Tools::redirect(<url>
+            }
+*/
 
         protected function getCustomValues(array $controler){
           $values=array();
@@ -108,7 +119,10 @@ class psnewslettersulayr extends Module implements WidgetInterface{
                 $this->registerHook('backOfficeHeader') &&
                 $this->registerHook('displayHome') &&
                 $this->registerHook('displayLeftColum') &&
-                $this->registerHook('footer');
+                $this->registerHook('footer') &&
+                $this->registerHook('displayProductFooter') &&
+                $this->registerHook('displayProductExtraContent') &&
+                $this->registerHook('displayFooterBefore');
         }
 
         public function uninstall(){
@@ -127,8 +141,13 @@ class psnewslettersulayr extends Module implements WidgetInterface{
         }
 
         
+        public function hookHeader(){
+            $this->context->controller->registerJavascript('modules-psnewslettersulary',
+            'modules/'.$this->name.'/views/js/newsletter.js',['position' => 'botton', 'priority' => 150]);
+        }
 
-        public function hookDisplayHome(){
+
+        public function hookDisplayHome($params){
            
             $resultInput=$this->getCustomValues($this->controls);
             $resultButton=$this->getButtonForm($this->button);
@@ -136,12 +155,41 @@ class psnewslettersulayr extends Module implements WidgetInterface{
                 'path' => $this->_path,
                 'customControls' => $resultInput,
                 'button' => $resultButton
+                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
             ));
 
             return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
             //return $this->display(__FILE__, 'views/templates/hook/displayHome.tpl');
         }
 
+        public function hookDisplayProductFooter($params){
+           
+            $resultInput=$this->getCustomValues($this->controls);
+            $resultButton=$this->getButtonForm($this->button);
+            $this->context->smarty->assign($this->name, array(
+                'path' => $this->_path,
+                'customControls' => $resultInput,
+                'button' => $resultButton
+                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
+            ));
+
+            return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
+        }
+
+       public function hookDisplayFooterBefore($params){
+           
+        $resultInput=$this->getCustomValues($this->controls);
+        $resultButton=$this->getButtonForm($this->button);
+        $this->context->smarty->assign($this->name, array(
+            'path' => $this->_path,
+            'customControls' => $resultInput,
+            'button' => $resultButton
+            //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
+        ));
+
+        return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
+    }
+        
 
         public function renderWidget($hookName, array $configuration){
 
