@@ -117,11 +117,6 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             return parent::install() &&
                 $this->registerHook('header') &&
                 $this->registerHook('backOfficeHeader') &&
-                $this->registerHook('displayHome') &&
-                $this->registerHook('displayLeftColum') &&
-                $this->registerHook('footer') &&
-                $this->registerHook('displayProductFooter') &&
-                $this->registerHook('displayProductExtraContent') &&
                 $this->registerHook('displayFooterBefore');
         }
 
@@ -146,35 +141,6 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             'modules/'.$this->name.'/views/js/newsletter.js',['position' => 'botton', 'priority' => 150]);
         }
 
-
-        public function hookDisplayHome($params){
-           
-            $resultInput=$this->getCustomValues($this->controls);
-            $resultButton=$this->getButtonForm($this->button);
-            $this->context->smarty->assign($this->name, array(
-                'path' => $this->_path,
-                'customControls' => $resultInput,
-                'button' => $resultButton
-                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
-            ));
-
-            return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
-            //return $this->display(__FILE__, 'views/templates/hook/displayHome.tpl');
-        }
-
-        public function hookDisplayProductFooter($params){
-           
-            $resultInput=$this->getCustomValues($this->controls);
-            $resultButton=$this->getButtonForm($this->button);
-            $this->context->smarty->assign($this->name, array(
-                'path' => $this->_path,
-                'customControls' => $resultInput,
-                'button' => $resultButton
-                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
-            ));
-
-            return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
-        }
 
        public function hookDisplayFooterBefore($params){
            
