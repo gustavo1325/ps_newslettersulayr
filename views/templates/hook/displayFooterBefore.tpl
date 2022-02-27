@@ -11,5 +11,5 @@
             <button  type="submit" id="formNews">{$psnewslettersulayr.button['PSNEWSLETTERSULAIR_SUBMIT']['label']}</button>
     </fieldset>
 </form>
-<p>{$urls.current_url|var_dump}</p>
+<!-- <p>{$urls.current_url|var_dump}</p> -->
     

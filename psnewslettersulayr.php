@@ -33,7 +33,7 @@ class psnewslettersulayr extends Module implements WidgetInterface{
         }
 
         private function getDependencies(){
-            require_once 'class/GetFormData.php';
+            require_once 'src/GetFormData.php';
         }
 
         protected function createControls(){
@@ -144,16 +144,16 @@ class psnewslettersulayr extends Module implements WidgetInterface{
 
        public function hookDisplayFooterBefore($params){
            
-        $resultInput=$this->getCustomValues($this->controls);
-        $resultButton=$this->getButtonForm($this->button);
-        $this->context->smarty->assign($this->name, array(
-            'path' => $this->_path,
-            'customControls' => $resultInput,
-            'button' => $resultButton
-            //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
-        ));
+            $resultInput=$this->getCustomValues($this->controls);
+            $resultButton=$this->getButtonForm($this->button);
+            $this->context->smarty->assign($this->name, array(
+                'path' => $this->_path,
+                'customControls' => $resultInput,
+                'button' => $resultButton
+                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
+            ));
 
-        return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayHome.tpl');
+        return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayFooterBefore.tpl');
     }
         
 
