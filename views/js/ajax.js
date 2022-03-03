@@ -1,5 +1,3 @@
-$(document).ready(()=>{
-//ajax for messages error
 const formNews = document.getElementById("formNews")
 
 if(formNews){
@@ -12,12 +10,3 @@ if(formNews){
            
           
           }
-    formNews.addEventListener('submit',()=>{
-        console.log("has pulsado")
-        
-        //then(response => response.json())
-        //.then(data => console.log(data));
-    })
-
-
-})

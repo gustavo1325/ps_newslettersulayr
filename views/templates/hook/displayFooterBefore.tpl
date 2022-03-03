@@ -1,5 +1,5 @@
 
-<form id="formNews" action="modules/psnewslettersulayr/newsletterForm.php" method="post">
+<form id="formNews" <!-- action="modules/psnewslettersulayr/newsletterForm.php" --> method="post">
     <fieldset>
         <legend></legend>
             <label for="nameNewsletter">{$psnewslettersulayr.customControls['PSNEWSLETTERSULAIR_NAME']['label']}</label>

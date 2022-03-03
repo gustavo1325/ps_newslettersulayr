@@ -139,6 +139,8 @@ class psnewslettersulayr extends Module implements WidgetInterface{
         public function hookHeader(){
             $this->context->controller->registerJavascript('modules-psnewslettersulary',
             'modules/'.$this->name.'/views/js/newsletter.js',['position' => 'botton', 'priority' => 150]);
+            $this->context->controller->registerJavascript('modules-psnewslettersulary',
+            'modules/'.$this->name.'/views/js/ajax.js',['position' => 'botton', 'priority' => 150]);
         }
 
 
