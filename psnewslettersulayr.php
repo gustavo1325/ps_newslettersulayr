@@ -137,13 +137,15 @@ class psnewslettersulayr extends Module implements WidgetInterface{
 
         
         public function hookHeader(){
+            $this->context->controller->registerJavascript('modules-psnewslettersulayr',
+            'modules/'.$this->name.'/views/js/ajax.js',['position' => 'botton', 'priority' => 150]);
             $this->context->controller->registerJavascript('modules-psnewslettersulary',
             'modules/'.$this->name.'/views/js/newsletter.js',['position' => 'botton', 'priority' => 150]);
-            $this->context->controller->registerJavascript('modules-psnewslettersulary',
-            'modules/'.$this->name.'/views/js/ajax.js',['position' => 'botton', 'priority' => 150]);
         }
 
-
+        public function postProcess(){
+           // echo "patata";
+        }
        public function hookDisplayFooterBefore($params){
            
             $resultInput=$this->getCustomValues($this->controls);
@@ -151,13 +153,14 @@ class psnewslettersulayr extends Module implements WidgetInterface{
             $this->context->smarty->assign($this->name, array(
                 'path' => $this->_path,
                 'customControls' => $resultInput,
-                'button' => $resultButton
-                //'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'It should be a module front controller not a File', array('pps' => 1), Configuration::get('PS_SSL_ENABLED'));
+                'button' => $resultButton,
+                'postAction' => $url= $this->context->link->getModuleLink('psnewslettersulary', 'validation')
             ));
 
         return $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayFooterBefore.tpl');
     }
         
+   
 
         public function renderWidget($hookName, array $configuration){
 
