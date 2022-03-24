@@ -40,7 +40,7 @@ const name = 'nameNewsletter',
     jQuery.ajax({
       url:'modules/psnewslettersulayr/src/ajaxResponde.php',
       type: 'post',
-      data: {email: 'cotoroto'},
+      data: {'email':valueInput.mailValue},
       dataType: 'html',
       error: function (_error){
         console.error(_error)
