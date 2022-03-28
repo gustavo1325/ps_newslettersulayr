@@ -23,7 +23,7 @@ const name = 'nameNewsletter',
    valueInput= {
     nameValue:'',
     mailValue:'',
-    boxPrivacitatVaule:''
+    boxPrivacitatValue:''
   }
   
   
@@ -31,8 +31,9 @@ const name = 'nameNewsletter',
     event.preventDefault();
     valueInput.mailValue = dataInput.getValueInput(mail)
     valueInput.nameValue = dataInput.getValueInput(name)
-    valueInput.boxPrivacitatVaule = dataInput.getValueInput(privacitat)
-    
+    valueInput.boxPrivacitatValue = document.getElementById(privacitat).checked
+    //console.log(valueInput.boxPrivacitatValue)
+  
     ajaxNews()                           
   });
 
@@ -40,13 +41,13 @@ const name = 'nameNewsletter',
     jQuery.ajax({
       url:'modules/psnewslettersulayr/src/ajaxResponde.php',
       type: 'post',
-      data: {'email':valueInput.mailValue},
+      data: {'email':valueInput.mailValue, 'name': valueInput.nameValue, 'politic': valueInput.boxPrivacitatValue},
       dataType: 'html',
       error: function (_error){
         console.error(_error)
       },
       success: function(_html){
-        console.log("hola manuel")
+        //console.log("hola manuel")
         console.log(_html)
         
       }

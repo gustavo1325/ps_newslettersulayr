@@ -1,47 +1,58 @@
 <?php
-
 require_once 'message.php';
-require_once 'createSession.php';
 
 class ValidatorForm{
 
    public $dataForm= array();
-   private $message;
-   private $session;
+  
 
    public function __construct(array $data){
-    $this->dataForm = $data;  
-    $this->message = new message(); 
-    $this->session = new createSession();
+    foreach($data as $key => $val){
+      $this->dataForm[$key]=$val;
+    } 
    }
 
 
    public function validateEmail(){
        $email = filter_var($this->dataForm['email'], FILTER_SANITIZE_EMAIL);
 
-       if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-      // echo ("$email is a valid email address");
-        $data = "$email is a valid email address";
-        $key = "keys";
-        $this->session->newSession();
-        $this->session->addDataSession($data, $key);
-       // echo $_SESSION['$key'];
-        
-      } else {
-        $data = "$email not valid email";
-        $key = "key";
-        $this->session->newSession();
-        $this->session->addDataSession($data, $key);
-        //echo $_SESSION['$key'];
-        //echo ("$email is not a valid email address");
-        
+       if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+          $message = new message("email");
+      } elseif(empty($email)) {
+        $message = new message("emailEmpty");      
       }
 
    }
 
    public function validateName(){
-     $name = filter_var($this->dataForm['name'], FILTER_SANITIZE_STRING);
+     $name = filter_var($this->dataForm['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+     if(empty($name)){ 
+      
+      $message = new message("name");
+     }else{
+       return true;
+     }
+   }
+
+   public function validatePolitic(){
+    
+    $politic = $this->dataForm['politic'];
+
+
+      if($politic == 'false'){
+        $message = new message("privacy");
+      }else{
+        
+      }
+    /* if($politic == false){
+  
+      
+     }else{
+      //$message = new message("privacy");
+      
+
+     }*/
    }
 
 
