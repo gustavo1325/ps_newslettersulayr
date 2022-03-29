@@ -20,6 +20,8 @@ class ValidatorForm{
           $message = new message("email");
       } elseif(empty($email)) {
         $message = new message("emailEmpty");      
+      }else{
+        return true;
       }
 
    }
@@ -43,16 +45,8 @@ class ValidatorForm{
       if($politic == 'false'){
         $message = new message("privacy");
       }else{
-        
+        return true;
       }
-    /* if($politic == false){
-  
-      
-     }else{
-      //$message = new message("privacy");
-      
-
-     }*/
    }
 
 

@@ -1,6 +1,8 @@
 <?php
 
 require_once 'ValidatorForm.php';
+require_once 'message.php';
+require_once 'listMailchimp.php';
 
 
 
@@ -14,9 +16,16 @@ if(isset($_POST["email"], $_POST["name"], $_POST["politic"])){
 
 $validatorForm = new ValidatorForm($dataAjaxForm);
 
-$validatorForm->validateName();
-$validatorForm->validateEmail();
-$validatorForm->validatePolitic();
+$name = $validatorForm->validateName();
+$email = $validatorForm->validateEmail();
+$politic = $validatorForm->validatePolitic();
+
+if($name == 'true' && $email == 'true' && $politic == 'true'){
+    
+    $submitList= new listMailchimp($dataAjaxForm['email'], $dataAjaxForm['name']);
+    $submitList->submitList();
+    $message = new message("send");
+}
 
 /*
 if($validatorForm->validateEmail() === false){

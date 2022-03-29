@@ -5,7 +5,8 @@ $(document).ready(()=>{
 const name = 'nameNewsletter',
       mail = 'emailNewsletter', 
       privacitat= 'politicsNewsletter', 
-    clickButton = document.getElementById("formNews")
+    clickButton = document.getElementById("formNews"),
+    messageError = document.getElementById("messageError")
 
 //this object have the class key 
     let dataInput = {
@@ -47,8 +48,10 @@ const name = 'nameNewsletter',
         console.error(_error)
       },
       success: function(_html){
-        //console.log("hola manuel")
-        console.log(_html)
+        messageError.innerHTML=_html
+        if(_html.match(/correctamente/)){
+            clickButton.reset()
+        }
         
       }
     })

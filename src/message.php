@@ -12,16 +12,19 @@ class message{
 
     function displayMessage($message){
         if($message === "email"){
-            ?> <p>Email no valido</p> <?php
+            ?> <p>Email no valido</p> <br><?php
         }
         if($message === "emailEmpty"){
-            ?> <p>Debe escribir su email</p> <?php
+            ?> <p>Debe escribir su email</p> <br> <?php
         }
         if($message === "name"){
-           ?> <p>Para continuar debe escribir su nombre </p><?php
+           ?> <p>Escriba su nombre </p> <br><?php
         }
         if($message === "privacy"){
-             ?> <p>Debe aceptar las condiciones</p> <?php
+             ?> <p>Debe aceptar las condiciones</p>  <br><?php
         }
+        if($message === "send"){
+            ?> <p>Datos enviados correctamente</p>  <br><?php
+       }
     }
 }
