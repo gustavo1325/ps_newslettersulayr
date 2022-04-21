@@ -18,11 +18,7 @@ class PsnewslettersulayrValidationModuleFrontController extends ModuleFrontContr
     public function postProcess(){
         echo "patata";
     }
-    /*public function validar(){
-        echo "desde aqui se valida";
-        dump($this->module);
-    }*/
-
+   
     public function initContent(){
         parent::initContent();
         $this->context->smarty->assign(
